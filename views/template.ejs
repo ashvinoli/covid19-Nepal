@@ -1,0 +1,26 @@
+<%- include("header") -%>
+<table class="table_decor">
+	<thead>
+	  <tr>
+	    <td>S.N</td>
+	    <td>District</td>
+	    <td>Total Cases</td>
+	    <td style="color:purple;">Active Cases</td>
+	    <td style="color:green;">Recovered</td>
+	    <td style="color:red;">Deaths</td>
+	  </tr>
+	</thead>
+	<%let serial = 1%>
+	<%data.forEach(function (item, index){ %>
+	<tr>
+	  <td><%=serial %></td>
+	  <td><a href="/district/<%=item.id%>"><%=item.title%></a></td>
+	  <td><%=item.cases%></td>
+	  <td style="color:purple;"><%=item.active%></td>
+	  <td style="color:green;"><%=item.recovered%></td>
+	  <td style="color:red;"><%=item.death%></td>
+	</tr>
+	<% serial += 1 %>
+	<% }) %>
+      </table>      
+<%- include("footer") -%>
