@@ -59,7 +59,7 @@ app.get("/district/:id",(req,resp)=>{
     },3000);
 });
 
-app.listen(port_number,function() {
+app.listen(process.env.PORT ||  port_number,function() {
     console.log("Starting server at port:"+port_number);
 });
 
