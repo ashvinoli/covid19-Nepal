@@ -59,6 +59,12 @@ app.get("/district/:id",(req,resp)=>{
     },3000);
 });
 
+app.post("/search",(req,resp)=>{
+    let query = req.body.search;
+    query = query[0].toUpperCase() + query.slice(1,query.length);
+    resp.redirect("/#"+query);
+})
+
 app.listen(process.env.PORT ||  port_number,function() {
     console.log("Starting server at port:"+port_number);
 });

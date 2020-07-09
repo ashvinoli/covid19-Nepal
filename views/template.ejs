@@ -1,6 +1,6 @@
 <%- include("header") -%>
-<iframe src="https://nepalcorona.info/embed/nepal-map" frameborder="0" style="width:600px;height:400px;border:0px"></iframe>  
-<table class="table_decor">
+<div class="container" id="district">
+      <table class="table_decor">
 	<thead>
 	  <tr>
 	    <td>S.N</td>
@@ -15,7 +15,7 @@
 	<%data.forEach(function (item, index){ %>
 	<tr>
 	  <td><%=serial %></td>
-	  <td><a href="/district/<%=item.id%>"><%=item.title%></a></td>
+	  <td id = "<%=item.title%>"><a href="/district/<%=item.id%>"><%=item.title%></a></td>
 	  <td><%=item.cases%></td>
 	  <td style="color:purple;"><%=item.active%></td>
 	  <td style="color:green;"><%=item.recovered%></td>
@@ -24,4 +24,5 @@
 	<% serial += 1 %>
 	<% }) %>
       </table>      
+</div>
 <%- include("footer") -%>
