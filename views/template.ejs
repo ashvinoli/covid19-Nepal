@@ -1,23 +1,28 @@
 <%- include("header") -%>
 <div class="container" id="district">
-      <table class="table_decor">
+      <table class="table_decor table table-striped table-dark">
 	<thead>
 	  <tr>
-	    <td>S.N</td>
-	    <td>District</td>
-	    <td>Total Cases</td>
-	    <td style="color:purple;">Active Cases</td>
-	    <td style="color:green;">Recovered</td>
-	    <td style="color:red;">Deaths</td>
+	    <th scope="col">S.N</td>
+	    <th scope="col"><%=region%></td>
+	    <th scope="col">Total Cases</td>
+	    <th scope="col" >Active Cases</td>
+	    <th scope="col" style="color:green;">Recovered</td>
+	    <th scope="col" style="color:red;">Deaths</td>
 	  </tr>
 	</thead>
 	<%let serial = 1%>
 	<%data.forEach(function (item, index){ %>
 	<tr>
 	  <td><%=serial %></td>
-	  <td id = "<%=item.title%>"><a href="/district/<%=item.id%>"><%=item.title%></a></td>
+	  <%if (region === "District"){%>
+	  <td id = "<%=item.title%>"><a href="/region/districts/<%=item.id%>"><%=item.title%></a></td>
+	  <% }else{ %>
+	  <td id = "<%=item.title%>"><%=item.title%></a></td>
+	  <% } %>
+	  
 	  <td><%=item.cases%></td>
-	  <td style="color:purple;"><%=item.active%></td>
+	  <td><%=item.active%></td>
 	  <td style="color:green;"><%=item.recovered%></td>
 	  <td style="color:red;"><%=item.death%></td>
 	</tr>
@@ -26,3 +31,4 @@
       </table>      
 </div>
 <%- include("footer") -%>
+

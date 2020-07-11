@@ -5,14 +5,9 @@
 .table_decor{
     padding:2px;
     border:2px solid black;
-    margin-left:auto;
-    margin-right:auto;
+    width:100%;
 }
 
-tr,td{
-    border:1px solid black;
-    padding:10px;
-}
 
 a{
     font-family: 'Fondamento';

@@ -13,52 +13,36 @@ let port_number = 3000;
 app.get('/',function (req,response) {
     //some code
     let all_data = [];
-    district.get_data((data)=>{
+    district.get_district_data((data)=>{
 	all_data.push(data);	
     },()=>{
 	all_data.sort((first,second)=>(first.title>second.title)?1:(second.title>first.title?-1:0));
 	response.render("template",{
-	    data:all_data
+	    data:all_data,
+	    region:"District"
 	});	
     });
     
 });
 
-app.get("/district/:id",(req,resp)=>{
+app.get("/region/:region/:id",(req,resp)=>{
     let id = req.params.id;
-    let mcts = [];
-    request("https://data.nepalcorona.info/api/v1/districts/"+id,function(error,re,response){
-	let munici = JSON.parse(response);
-	let municipalities = munici.municipalities;
-	municipalities.forEach(item => {
-	    request("https://data.nepalcorona.info/api/v1/municipals/"+item.id,function(error,requ,respon){
-		let body = JSON.parse(respon)
-		let title = body.title
-		let cases = body.covid_cases
-		let total_cases = cases.length
-		let recovered = 0
-		cases.forEach(cur_item => {
-		    if (cur_item.currentState === "recovered") {
-			recovered+=1
-		    }
-		});
-		let temp = {
-		    title:title,
-		    total_cases:total_cases,
-		    recovered:recovered
-		};
-		mcts.push(temp);
-	    });
+    let region = req.params.region;
+    district.get_munci_data(id,region,(mcts)=>{
+	resp.render("template",{
+	    data:mcts,
+	    region:"Municipality"
 	});
-    });
-    setTimeout(()=>{
-	mcts.sort((first,second)=>(first.title>second.title)?1:(second.title>first.title?-1:0));
+    })
+});
+
+app.get("/region/municipals",(req,resp)=>{
+    district.get_munci_data("","municipals",(mcts)=>{
 	resp.render("munci",{
 	    data:mcts
 	});
-    },3000);
+    })
 });
-
 app.post("/search",(req,resp)=>{
     let query = req.body.search;
     query = query[0].toUpperCase() + query.slice(1,query.length);
@@ -68,6 +52,4 @@ app.post("/search",(req,resp)=>{
 app.listen(process.env.PORT ||  port_number,function() {
     console.log("Starting server at port:"+port_number);
 });
-
-
 
