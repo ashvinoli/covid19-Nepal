@@ -39,14 +39,16 @@ app.get("/region/:region/:id",(req,resp)=>{
 app.get("/region/municipals",(req,resp)=>{
     district.get_munci_data("","municipals",(mcts)=>{
 	resp.render("munci",{
-	    data:mcts
+	    data:mcts,
+	    region:"Municipality"
 	});
     })
 });
 app.post("/search",(req,resp)=>{
     let query = req.body.search;
-    query = query[0].toUpperCase() + query.slice(1,query.length);
-    resp.redirect("/#"+query);
+    query = (query.length==0)?null:query[0].toUpperCase() + query.slice(1,query.length);
+    query?resp.redirect("/#"+query):resp.redirect("/");
+
 })
 
 app.listen(process.env.PORT ||  port_number,function() {
